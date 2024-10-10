@@ -11,8 +11,8 @@ namespace MySample
         private Animation flameAnim;
 
         //1초 타이머
-        [SerializeField] private float flameTimer = 1f;
-        private float countdown = 0f;
+        //[SerializeField] private float flameTimer = 1f;
+        //private float countdown = 0f;
 
         private int lightMode;
         #endregion
