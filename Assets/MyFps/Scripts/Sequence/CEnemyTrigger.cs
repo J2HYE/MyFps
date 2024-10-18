@@ -9,8 +9,13 @@ namespace MyFps
         #region Variables
         public GameObject theDoor;      //문
         public AudioSource doorBang;    //문 열기 사운드
+
         public AudioSource jumpScare;   //적 등장 사운드
         public GameObject theRobot;     //적
+
+        //배경음
+        public AudioSource bgm01;
+        public AudioSource bgm02;
         #endregion
 
         private void OnTriggerEnter(Collider other)
@@ -26,6 +31,7 @@ namespace MyFps
 
             //문 사운드
             doorBang.Play();
+            bgm01.Stop();
 
             //Enemy 활성화
             theRobot.SetActive(true);
@@ -34,6 +40,18 @@ namespace MyFps
 
             //Enemy 등장 사운드
             jumpScare.Play();
+            bgm02.Play();
+
+            //Enemy 타겟을 향해 걷기
+            RobotController robot = theRobot.GetComponent<RobotController>();
+            if(robot !=null)
+            {
+                robot.SetState(RobotState.R_Walk);
+            }
+
+
+            //트리거 킬
+            Destroy(this.gameObject);
         }
     }
 }
