@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 namespace MyFps
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable
     {
         #region Variables
         public SceneFader fader;
@@ -22,12 +21,21 @@ namespace MyFps
         public AudioSource hurt01;     //데미지 소리1
         public AudioSource hurt02;     //데미지 소리2
         public AudioSource hurt03;     //데미지 소리3
+
+        //무기
+        public GameObject realPistol;
         #endregion
 
         private void Start()
         {
             //초기화
             currentHealth = maxHealth;
+
+            //무기 획득
+            if(PlayerStats.Instance.HasGun)
+            {
+                realPistol.SetActive(true);
+            }
         }
 
         public void TakeDamage(float damage)
@@ -55,6 +63,7 @@ namespace MyFps
         IEnumerator DamageEffect()
         {
             damageFlash.SetActive(true);
+            CinemachineShake.Instance.ShakeCamera(1f, 1f);
 
             int randNumber = Random.Range(1, 4);
             if (randNumber == 1)
